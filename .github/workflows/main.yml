@@ -15,5 +15,5 @@ jobs:
       - uses: nixbuild/nixbuild-action@v15
         with:
           nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
-          generate-summary-for: 'workflow'
+          generate_summary_for: 'workflow'
       - run: nix-build
