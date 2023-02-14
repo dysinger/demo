@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  nixbuild:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout
+      - uses: nixbuild/nix-quick-install-action
+      - uses: nixbuild/nixbuild-action
+        with:
+          nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
+          generate-summary-for: 'workflow'
+      - run: nix-build
