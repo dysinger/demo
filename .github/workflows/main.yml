@@ -10,7 +10,7 @@ jobs:
   nixbuild:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v3
       - uses: nixbuild/nix-quick-install-action@v21
       - uses: nixbuild/nixbuild-action@v15
         with:
