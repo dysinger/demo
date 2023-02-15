@@ -1,19 +1,30 @@
 name: CI
 
 on:
+  pull_request:
   push:
     branches:
-      - master
-  pull_request:
+      - main
 
 jobs:
-  nixbuild:
+
+  demo:
     runs-on: ubuntu-20.04
+
     steps:
       - uses: actions/checkout@v3
+
       - uses: nixbuild/nix-quick-install-action@v21
+        with:
+          nix_on_tmpfs: true
+          nix_conf: |
+            experimental-features = nix-command flakes
+
       - uses: nixbuild/nixbuild-action@v15
         with:
           nixbuild_ssh_key: ${{ secrets.nixbuild_ssh_key }}
           generate_summary_for: 'workflow'
-      - run: nix-build
+
+      - run: |
+          nix build -L \
+            --eval-store auto --store ssh-ng://eu.nixbuild.net
